@@ -1,0 +1,106 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+/* //my approach-working for almost all test cases
+class Solution {
+public:
+
+    unsigned long long Ltonum(ListNode* head){
+        unsigned long long result = 0;
+        unsigned long long base = 1;
+
+        while(head != nullptr){
+            int digit = head->val;
+
+            if (result<0){
+                return -1;
+            }            
+
+            result += digit*base;
+            base *= 10;
+
+            head = head->next; 
+        }
+        return result;
+    }
+
+    ListNode* NumtoL(unsigned long long num){
+        ListNode* head = nullptr;
+
+        if (num == 0) {  // Handle the special case of 0
+            head = new ListNode(0);  // Create a single node with value 0
+            return head;
+        }
+
+        while (num>0){
+            int digit = num % 10;
+            ListNode* new_node = new ListNode(digit);
+            new_node->next = head;
+            head = new_node;
+            num /= 10;
+        }
+        return head;
+    }
+
+    ListNode* reverseList(ListNode* head) {
+        ListNode* prev = nullptr;
+        ListNode* current = head;
+        ListNode* next;
+
+        while (current != nullptr) {
+            next = current->next;
+            current->next = prev;
+            prev = current;
+            current = next;
+        }
+
+        return prev; // Return the new head
+    }
+
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        unsigned long long num1 = Ltonum(l1);
+        unsigned long long num2 = Ltonum(l2);
+
+        unsigned long long sum = num1 + num2;
+
+        ListNode* answer = NumtoL(sum);
+
+        answer = reverseList(answer);
+        return answer;
+    }
+};*/
+
+
+class Solution {
+public:
+
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode dummy(0);
+        ListNode* curr = &dummy;
+        int carry = 0;
+
+        while(l1 != nullptr || l2 != nullptr || carry>0){
+            if (l1 != nullptr){
+                carry += l1->val;
+                l1 = l1->next;
+            }
+            if (l2 != nullptr){
+                carry += l2->val;
+                l2 = l2->next;
+            }
+
+            curr->next = new ListNode(carry%10);
+            carry /= 10;
+            curr = curr->next;
+        }
+
+        return dummy.next;
+    }  
+};
