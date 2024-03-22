@@ -1,0 +1,31 @@
+class Solution {
+public:
+    string reverseStr(string s, int k) {
+        int start = 0; 
+        int end = k-1;
+        for (int i=0; i<s.length(); ++i){
+            if (i==0){
+                if (s.length()-1 < end){
+                    end = s.length()-1;
+                }
+                while(start<end){
+                    swap(s[start], s[end]);
+                    start++;
+                    end--;
+                }
+            }else if (i%(2*k)==0){
+                start = i;
+                end = i+k-1;
+                if (s.length()-1 < end){
+                    end = s.length()-1;
+                }
+                while(start<end){
+                    swap(s[start], s[end]);
+                    start++;
+                    end--;
+                }
+            }
+        }
+        return s;
+    }
+};
