@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val) {
+        
+        int start = 0;
+        int end = nums.size();
+
+        while (start < end) {
+            if (nums[start] == val) {
+                
+                while (end > start && nums[end - 1] == val) {
+                    end--;
+                }
+                
+                if (start < end) {
+                    swap(nums[start], nums[end - 1]);
+                    end--;
+                }
+            }
+            start++;
+        }
+
+        
+        return end;
+    }
+};
