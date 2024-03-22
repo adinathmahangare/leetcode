@@ -1,0 +1,46 @@
+class Solution {
+private:
+    char getExpectedOpening(char closingBracket){
+        switch(closingBracket){
+            case '}':
+            return '{';
+
+            case ']':
+            return '[';
+
+            case ')':
+            return '(';
+
+            default:
+            return '\0';
+        }
+    } 
+public:
+    bool isValid(string s) {
+        if (s.length()%2 != 0){
+            return false;
+        }
+
+        stack<char> Open_Bracks;
+
+        for (int i = 0; i<s.length(); ++i){
+            if (s[i] == '{' || s[i] == '[' || s[i] == '('){
+                Open_Bracks.push(s[i]);
+            }else{
+                if (Open_Bracks.empty()) {
+                    return false;
+                }
+                
+                char expectedOpening = getExpectedOpening(s[i]);
+                if (Open_Bracks.top() != expectedOpening){
+                    return false;
+                }
+
+                Open_Bracks.pop();
+            }
+        }
+
+        return Open_Bracks.empty();
+
+    }
+};
